@@ -4,18 +4,19 @@ imgproxy
 A basic HTTP image proxy server implemented in Node.js.
 
 
-Deployment
-----------
+Provisioning/deployment
+-----------------------
 
-Deployment is a (partly) manual process:
+Deployment is a mostly manual process:
 
- * launch an (e.g.) EC2 instance with unrestricted access to a port of your
-   choice (server listens on `8888` by default)
+First, launch an (e.g.) EC2 instance with unrestricted access to a port of your
+choice (server listens on `8888` by default).
 
- * clone the repo:
+SSH into the server, and run the following (assuming Ubuntu distro):
  ```
- $ git clone git@bitbucket.org:harto/imgproxy.git
- $ #TODO
+ $ git clone https://bitbucket.org/harto/imgproxy.git
+ $ cd imgproxy
+ $ bin/setup-ubuntu
  ```
 
 
@@ -24,7 +25,7 @@ Run
 
 To start listening on port `8888`:
 ```
-$ node server.js
+$ npm start
 ```
 
 (Set `PORT` to something else as required.)
@@ -37,12 +38,8 @@ Run unit tests:
 ```
 $ npm test
 ```
-or
-```
-$ yarn test
-```
 
-A basic set of system tests can be run against the locally-running service:
+A basic set of system tests can be run against a locally-running instance:
 ```
 $ bin/test
 ```
