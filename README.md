@@ -30,6 +30,11 @@ $ npm start
 
 (Set `PORT` to something else as required.)
 
+In "production", you could try this:
+```
+$ nohup npm start &
+```
+
 
 Development
 -----------
