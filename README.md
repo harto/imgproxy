@@ -13,11 +13,11 @@ First, launch an (e.g.) EC2 instance with unrestricted access to a port of your
 choice (server listens on `8888` by default).
 
 SSH into the server, and run the following (assuming Ubuntu distro):
- ```
- $ git clone https://bitbucket.org/harto/imgproxy.git
- $ cd imgproxy
- $ bin/setup-ubuntu
- ```
+```
+$ git clone https://bitbucket.org/harto/imgproxy.git
+$ cd imgproxy
+$ bin/setup-ubuntu
+```
 
 
 Run
