@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -eu
+
+# A basic suite of system tests.
+
+# Assume service is running locally:
+SERVICE_URL="http://localhost:8888"
+IMAGE_URL="https://avatars0.githubusercontent.com/u/103448"
+
+enc() {
+  node -e 'console.log(encodeURIComponent(process.argv[1]))' "$1"
+}
+
+#
+# Ensure we actually get an image
+#
+
+path=$(mktemp)
+curl "${SERVICE_URL}/image?url=$(enc $IMAGE_URL)" >$path
+if ! file $path | grep -wq image; then
+  echo "oops, unexpected file type: $(file $path)"
+  exit 1
+fi
+
+#
+# Test concurrency
+#
+
+# TODO: provide some expectations about response times
+ab -c100 -n100 "${SERVICE_URL}/image?url=$(enc $IMAGE_URL)"
+
+#
+# Ensure connections aren't blocked by one slow response
+#
+
+# a one-shot slow response: GET http://localhost:9991 should take 5 seconds
+nc -i 5 -l 9991 &
+nc_pid=$!
+slow_image_url="http://localhost:9991"
+trap "kill -9 $nc_pid" EXIT
+
+curl "${SERVICE_URL}/image?url=$(enc $slow_image_url)" & &>/dev/null
+# TODO: actually measure the response time
+time curl "${SERVICE_URL}/image?url=$(enc $IMAGE_URL)" >/dev/null
