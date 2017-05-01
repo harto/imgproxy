@@ -34,6 +34,10 @@ In "production", you could try this:
 ```
 $ nohup npm start &
 ```
+Or, using [foreverjs](https://github.com/foreverjs/forever):
+```
+$ forever start server.js
+```
 
 
 Development
