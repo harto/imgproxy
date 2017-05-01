@@ -45,6 +45,12 @@ describe('server', () => {
         assert.equal(resp.statusCode, 400);
         assert.equal(resp.statusMessage, 'invalid protocol: ftp');
       }));
+    it('rejects redirect responses', () =>
+      get(`/image?url=${encodeURIComponent('https://flic.kr/p/PhZfjj')}`).
+      then((resp) => {
+        assert.equal(resp.statusCode, 502);
+        assert.equal(resp.statusMessage, 'unsupported upstream response (HTTP 302)');
+      }));
     // it('handles multiple concurrent connections');
     // it('streams responses');
   });

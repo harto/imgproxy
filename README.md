@@ -39,7 +39,7 @@ $ nohup npm start &
 Development
 -----------
 
-Run unit tests:
+Run unit tests (note: these make real outgoing HTTP requests):
 ```
 $ npm test
 ```
